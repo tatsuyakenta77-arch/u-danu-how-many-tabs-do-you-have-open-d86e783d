@@ -24,6 +24,11 @@ const outDir = process.env.MAKEFUN_OUTPUT_DIR ?? "/output";
 // to ship anything outside that shape: a word, a second number or a
 // stray newline would fail the gate, and padding the count would stop
 // it being the honest answer.
+// A count is written canonically: no leading zero unless the count
+// itself is zero, so the digit the judge reads is the number itself.
+if (/^0[0-9]/.test(TAB_COUNT)) {
+  throw new Error("entry count must not have a leading zero");
+}
 if (!/^[0-9]{1,5}$/.test(TAB_COUNT)) {
   throw new Error("entry count must be one number of 1 to 5 digits");
 }
